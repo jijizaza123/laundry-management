@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>客户登录 · 洗衣店</title>
+    <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="/css/me.css">
+</head>
+<body class="me-auth-body">
+<div class="me-auth">
+    <aside class="me-auth-aside">
+        <div class="me-auth-logo"><span class="brand-mark">洗</span>洗衣店</div>
+        <h1>我的衣服，<br>到哪一步了？</h1>
+        <ul class="me-auth-points">
+            <li>随时查看洗涤进度、预计取衣时间</li>
+            <li>一眼看清欠款金额、消费记录</li>
+            <li>会员等级、积分、折扣自动累计</li>
+        </ul>
+        <div class="me-auth-foot">员工请从 <a href="/login">管理端登录</a></div>
+    </aside>
+
+    <main class="me-auth-main">
+        <div class="me-auth-card">
+            <div class="seg me-auth-tabs" id="tabs">
+                <button class="active" data-tab="login">登录</button>
+                <button data-tab="register">注册</button>
+            </div>
+
+            <!-- 登录 -->
+            <form id="loginForm" class="me-form">
+                <div class="field">
+                    <label for="loginPhone">手机号</label>
+                    <input class="input" id="loginPhone" type="tel" autocomplete="username" placeholder="注册时使用的手机号" required>
+                </div>
+                <div class="field">
+                    <label for="loginPassword">密码</label>
+                    <input class="input" id="loginPassword" type="password" autocomplete="current-password" placeholder="登录密码" required>
+                </div>
+                <button class="btn me-submit" type="submit" id="loginBtn">登录</button>
+                <p class="me-tip" id="loginTip"></p>
+            </form>
+
+            <!-- 注册 -->
+            <form id="registerForm" class="me-form" hidden>
+                <div class="field">
+                    <label for="regPhone">手机号</label>
+                    <input class="input" id="regPhone" type="tel" autocomplete="username" placeholder="用手机号作为账号（本地测试可填任意号码）" required>
+                </div>
+                <div class="field">
+                    <label for="regName">姓名（选填）</label>
+                    <input class="input" id="regName" type="text" placeholder="到店时登记的姓名，可不填">
+                </div>
+                <div class="field">
+                    <label for="regPassword">密码</label>
+                    <input class="input" id="regPassword" type="password" autocomplete="new-password" placeholder="至少 4 位" required>
+                </div>
+                <button class="btn me-submit" type="submit" id="registerBtn">注册并登录</button>
+                <p class="me-tip" id="registerTip"></p>
+            </form>
+        </div>
+        <p class="me-auth-hint">同一手机号若已在门店消费过，注册后会自动关联历史订单。</p>
+    </main>
+</div>
+<script src="/js/api.js"></script>
+<script src="/js/me_login.js"></script>
+</body>
+</html>

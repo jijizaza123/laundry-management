@@ -1,0 +1,23 @@
+{% extends "base_me.html" %}
+{% block title %}消息{% endblock %}
+
+{% block content %}
+<div class="page-head">
+    <div>
+        <h1>消息</h1>
+        <p>门店调价、衣服可取、预约状态变化都会推到这里</p>
+    </div>
+    <button class="btn btn-ghost" id="readAll">全部已读</button>
+</div>
+
+<div class="card">
+    <div class="msg-list" id="msgList">
+        <div class="empty">加载中…</div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/js/me_common.js"></script>
+<script src="/js/me_messages.js"></script>
+{% endblock %}

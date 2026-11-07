@@ -1,0 +1,61 @@
+{% extends "base_me.html" %}
+{% block title %}线上点单{% endblock %}
+
+{% block content %}
+<div class="page-head">
+    <div>
+        <h1>线上点单</h1>
+        <p>先预约上门取件，或者直接下单到店送洗；金额以到店复核为准</p>
+    </div>
+</div>
+
+<div class="grid grid-2 me-book-grid">
+    <div class="card">
+        <h2 class="card-title">预约上门取件</h2>
+        <p class="card-sub">师傅按你约的时间上门取件，取到后现场核对件数和面料，再生成洗衣单。</p>
+        <form id="apptForm" class="form">
+            <label>上门时间
+                <input type="datetime-local" id="apptTime" required>
+            </label>
+            <label>取件地址
+                <input type="text" id="apptAddress" maxlength="200" placeholder="小区 + 楼栋门牌" required>
+            </label>
+            <label>备注（选填）
+                <input type="text" id="apptNote" maxlength="300" placeholder="大概几件、有没有大衣 / 羽绒服">
+            </label>
+            <div class="form-actions">
+                <button class="btn btn-primary" type="submit" id="apptSubmit">提交预约</button>
+            </div>
+        </form>
+        <div id="apptList" class="me-book-list"><div class="empty">加载中…</div></div>
+    </div>
+
+    <div class="card">
+        <h2 class="card-title">直接下单（到店送洗）</h2>
+        <p class="card-sub">选好衣物和服务，金额按门店价目表 + 你的会员折扣算；到店时师傅会复核实际件数。</p>
+        <form id="orderForm" class="form">
+            <div id="orderRows" class="me-order-rows"></div>
+            <button class="btn btn-ghost btn-sm" type="button" id="addRow">+ 再加一件</button>
+            <label>期望取衣时间（选填）
+                <input type="datetime-local" id="pickupTime">
+            </label>
+            <label class="me-check">
+                <input type="checkbox" id="withAppointment"> 顺便预约上门取件（用左边填的时间和地址）
+            </label>
+            <div class="me-quote" id="quoteBox">
+                <div class="sline"><span>折前</span><span id="quoteSubtotal">¥0.00</span></div>
+                <div class="sline"><span>会员折扣</span><span id="quoteDiscount">无折扣</span></div>
+                <div class="sline total"><span>预计应收</span><span id="quoteTotal">¥0.00</span></div>
+            </div>
+            <div class="form-actions">
+                <button class="btn btn-primary" type="submit" id="orderSubmit">提交订单</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/js/me_common.js"></script>
+<script src="/js/me_book.js"></script>
+{% endblock %}

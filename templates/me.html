@@ -1,0 +1,104 @@
+{% extends "base_me.html" %}
+{% block title %}我的首页{% endblock %}
+
+{% block content %}
+<div class="page-head">
+    <div>
+        <h1>你好，<span id="helloName">-</span></h1>
+        <p>这里只显示你自己的洗衣记录</p>
+    </div>
+    <div class="me-head-actions">
+        <a class="btn btn-ghost btn-sm" href="/me/orders">全部订单</a>
+    </div>
+</div>
+
+<div class="grid grid-4">
+    <div class="stat">
+        <div class="label"><i class="dot"></i>在店衣物</div>
+        <div class="value" id="kpiActive">-</div>
+        <div class="hint">待洗涤 / 洗涤中 / 可取衣</div>
+    </div>
+    <div class="stat is-warn">
+        <div class="label"><i class="dot"></i>可取衣</div>
+        <div class="value" id="kpiReady">-</div>
+        <div class="hint">可以到店取走了</div>
+    </div>
+    <div class="stat is-warn">
+        <div class="label"><i class="dot"></i>待付款</div>
+        <div class="value" id="kpiUnpaid">-</div>
+        <div class="hint">取衣时结算</div>
+    </div>
+    <div class="stat is-success">
+        <div class="label"><i class="dot"></i>累计消费</div>
+        <div class="value" id="kpiSpent">-</div>
+        <div class="hint">已付款总额</div>
+    </div>
+</div>
+
+<div class="grid grid-2" style="margin-top:16px">
+    <div class="card">
+        <div class="card-head">
+            <h2>会员卡片</h2>
+            <span class="sub">等级 · 积分 · 折扣</span>
+        </div>
+        <div class="me-member">
+            <div class="me-member-level">
+                <span class="badge lv-0" id="levelBadge">普通客户</span>
+                <span class="me-member-discount" id="discountText">-</span>
+            </div>
+            <div class="me-member-points">
+                <span class="mono" id="pointsText">-</span>
+                <span class="muted">积分</span>
+            </div>
+            <div class="me-progress">
+                <div class="me-progress-bar"><i id="levelBar" style="width:0%"></i></div>
+                <div class="me-progress-text" id="levelHint">-</div>
+            </div>
+            <div class="me-member-meta">
+                <div><span class="muted">手机号</span><span class="mono" id="phoneText">-</span></div>
+                <div><span class="muted">地址</span><span id="addressText">-</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-head">
+            <h2>最近一单</h2>
+            <span class="sub">最新进度</span>
+        </div>
+        <div id="latestBox" class="me-latest">
+            <div class="empty">还没有订单记录</div>
+        </div>
+    </div>
+</div>
+
+<div class="card" style="margin-top:16px">
+    <div class="card-head">
+        <h2>进行中的订单</h2>
+        <span class="sub">点击查看明细</span>
+    </div>
+    <div class="table-wrap">
+        <table>
+            <thead>
+            <tr>
+                <th>订单号</th>
+                <th>衣物</th>
+                <th>件数</th>
+                <th>应收</th>
+                <th>待付</th>
+                <th>状态</th>
+                <th>预计取衣</th>
+            </tr>
+            </thead>
+            <tbody id="activeBody">
+            <tr><td colspan="7" class="empty">加载中…</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/js/me_common.js"></script>
+<script src="/js/me.js"></script>
+{% endblock %}

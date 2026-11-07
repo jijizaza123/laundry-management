@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block title %}会员{% endblock %}
+
+{% block content %}
+<div class="page-head">
+    <div>
+        <h1>会员管理</h1>
+        <p>等级由累计积分自动升级（只升不降）：100 分普通会员、300 分银卡、800 分金卡、1500 分钻石</p>
+    </div>
+    <div class="btn-row">
+        <input class="input" id="keyword" placeholder="姓名 / 手机号" style="width:190px;" onkeydown="if(event.key==='Enter'){loadMembers();}">
+        <button class="btn btn-ghost btn-sm" style="height:38px;" onclick="loadMembers()">搜索</button>
+        <button class="btn btn-sm" style="height:38px;" onclick="openAdd()">新增会员</button>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-head">
+        <h2>会员列表</h2>
+        <span class="sub" id="countLabel">—</span>
+    </div>
+    <div class="table-wrap">
+        <table>
+            <thead>
+            <tr>
+                <th>姓名</th>
+                <th>手机号</th>
+                <th>地址</th>
+                <th>等级</th>
+                <th>积分</th>
+                <th>享折扣</th>
+                <th>注册时间</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody id="memberBody">
+            <tr><td colspan="8" class="empty">加载中…</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal" id="editModal">
+    <div class="modal-panel">
+        <div class="modal-head">
+            <h3 id="editTitle">编辑会员</h3>
+            <button class="modal-close" onclick="closeModal('editModal')">×</button>
+        </div>
+        <input type="hidden" id="editId">
+        <div class="row">
+            <div class="field"><label>姓名</label><input class="input" id="editName"></div>
+            <div class="field"><label>手机号</label><input class="input" id="editPhone"></div>
+        </div>
+        <div class="field"><label>地址</label><input class="input" id="editAddress" placeholder="选填"></div>
+        <div class="row">
+            <div class="field">
+                <label>会员等级</label>
+                <select class="select" id="editLevel">
+                    <option value="0">普通客户（100%）</option>
+                    <option value="1">普通会员（95%）</option>
+                    <option value="2">银卡会员（90%）</option>
+                    <option value="3">金卡会员（85%）</option>
+                    <option value="4">钻石会员（80%）</option>
+                </select>
+            </div>
+            <div class="field"><label>积分</label><input class="input" id="editPoints" type="number" min="0" value="0"></div>
+        </div>
+        <div class="modal-foot">
+            <button class="btn btn-ghost" onclick="closeModal('editModal')">取消</button>
+            <button class="btn" onclick="saveMember()">保存</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="bindModal">
+    <div class="modal-panel">
+        <div class="modal-head">
+            <h3 id="bindTitle">开通网店账号</h3>
+            <button class="modal-close" onclick="closeModal('bindModal')">×</button>
+        </div>
+        <input type="hidden" id="bindId">
+        <p class="hint">老客户只能由门店开通账号，不开放自助认领——否则别人拿手机号就能看到你的订单。</p>
+        <div class="field"><label>登录手机号</label><input class="input" id="bindPhone" readonly></div>
+        <div class="field"><label>初始密码</label><input class="input" id="bindPassword" placeholder="至少 6 位，不能是纯数字"></div>
+        <div class="modal-foot">
+            <button class="btn btn-ghost" onclick="closeModal('bindModal')">取消</button>
+            <button class="btn" onclick="doBind()">开通</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/js/members.js"></script>
+{% endblock %}

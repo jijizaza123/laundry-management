@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}洗衣店管理{% endblock %} · 洗衣店管理系统</title>
+    <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+<header class="topbar">
+    <a class="brand" href="/"><span class="brand-mark">洗</span>洗衣店管理</a>
+    <nav class="nav" id="nav">
+        <a href="/" data-page="dashboard">首页</a>
+        <a href="/receive" data-page="receive">收衣</a>
+        <a href="/orders" data-page="orders">订单</a>
+        <a href="/review" data-page="review">复核</a>
+        <a href="/appointments" data-page="appointments">上门取件</a>
+        <a href="/chat" data-page="chat">助手</a>
+        <a href="/pickup" data-page="pickup">取衣</a>
+        <a href="/members" data-page="members">会员</a>
+        <a href="/inventory" data-page="inventory">库存</a>
+        <a href="/finance" data-page="finance">财务</a>
+        <a href="/metrics" data-page="metrics">指标</a>
+    </nav>
+    <div class="nav-user">
+        <span class="avatar" id="avatar">-</span>
+        <span id="userName">-</span>
+        <button class="btn btn-ghost btn-sm" onclick="logout()">退出</button>
+    </div>
+</header>
+
+<div class="container">
+    {% block content %}{% endblock %}
+</div>
+
+<div class="toast-host" id="toastHost"></div>
+{% block modal %}{% endblock %}
+
+<script src="/js/api.js"></script>
+<script src="/js/app.js"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

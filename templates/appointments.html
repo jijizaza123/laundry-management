@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}上门取件{% endblock %}
+
+{% block content %}
+<div class="page-head">
+    <div>
+        <h1>上门取件</h1>
+        <p>客户在客户端预约的上门时间；确认后按时上门，取到件再生成洗衣单</p>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-head">
+        <h2 class="card-title">预约列表</h2>
+        <div id="statusFilter" class="seg">
+            <button data-status="" class="active">全部</button>
+            <button data-status="pending">待确认</button>
+            <button data-status="confirmed">已确认</button>
+            <button data-status="completed">已取件</button>
+        </div>
+    </div>
+    <div class="table-wrap">
+        <table>
+            <thead>
+            <tr>
+                <th>预约号</th>
+                <th>客户</th>
+                <th>上门时间</th>
+                <th>地址</th>
+                <th>备注</th>
+                <th>状态</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody id="apptBody">
+            <tr><td colspan="7" class="empty">加载中…</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/js/appointments.js"></script>
+{% endblock %}

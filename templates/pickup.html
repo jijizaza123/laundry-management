@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}取衣{% endblock %}
+
+{% block content %}
+<div class="page-head">
+    <div>
+        <h1>取衣结算</h1>
+        <p>客户凭单取衣，结算后自动累计积分并升级会员</p>
+    </div>
+    <div class="btn-row">
+        <input class="input" id="keyword" placeholder="订单号 / 姓名 / 手机号" style="width:210px;" onkeydown="if(event.key==='Enter'){loadOrders();}">
+        <button class="btn btn-ghost btn-sm" style="height:38px;" onclick="loadOrders()">搜索</button>
+    </div>
+</div>
+
+<div class="grid grid-3" style="margin-bottom:16px;">
+    <div class="stat">
+        <div class="label"><span class="dot"></span>可取衣</div>
+        <div class="value" id="pReady">0</div>
+        <div class="hint">等待客户上门</div>
+    </div>
+    <div class="stat is-warn">
+        <div class="label"><span class="dot"></span>逾期未取</div>
+        <div class="value" id="pOverdue">0</div>
+        <div class="hint">超过预约取衣日期</div>
+    </div>
+    <div class="stat is-success">
+        <div class="label"><span class="dot"></span>待收金额</div>
+        <div class="value" id="pRemaining">¥0</div>
+        <div class="hint">可取衣订单合计</div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-head">
+        <h2>可取衣订单</h2>
+        <span class="sub" id="countLabel">—</span>
+    </div>
+    <div class="table-wrap">
+        <table>
+            <thead>
+            <tr>
+                <th>订单号</th>
+                <th>客户</th>
+                <th>衣物明细</th>
+                <th>应收</th>
+                <th>已收</th>
+                <th>待收</th>
+                <th>预约取衣</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody id="pickupBody">
+            <tr><td colspan="8" class="empty">加载中…</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block modal %}
+<div class="modal" id="detailModal">
+    <div class="modal-panel">
+        <div class="modal-head">
+            <h3 id="detailTitle">订单详情</h3>
+            <button class="modal-close" onclick="closeModal('detailModal')">×</button>
+        </div>
+        <div id="detailBody"></div>
+        <div class="modal-foot">
+            <button class="btn btn-ghost" onclick="closeModal('detailModal')">关闭</button>
+            <button class="btn btn-success" id="settleBtn">确认结算</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/js/pickup.js"></script>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "base_me.html" %}
+{% block title %}洗衣助手{% endblock %}
+
+{% block content %}
+<div class="page-head">
+    <div>
+        <h1>洗衣助手</h1>
+        <p>只查你本人的订单，只答有依据的洗护问题</p>
+    </div>
+    <div class="me-head-actions">
+        <button class="btn btn-ghost btn-sm" id="clearChat" type="button">清空对话</button>
+    </div>
+</div>
+
+<div class="me-chat card">
+    <div class="me-chat-log" id="chatLog">
+        <div class="bubble is-assistant">
+            <div class="bubble-text">你好，我是洗衣助手，下面这些我可以直接帮你查：</div>
+            <ul class="bubble-list">
+                <li>衣服洗到哪一步了、什么时候能取</li>
+                <li>某一单的钱怎么算的、还差多少没付</li>
+                <li>我的等级和折扣、还差多少积分升级</li>
+                <li>某种面料怎么洗、有什么禁忌（会给依据）</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="me-chat-quick" id="quickAsks">
+        <button type="button" class="chip">我的衣服洗到哪了？</button>
+        <button type="button" class="chip">我有几件能取了？</button>
+        <button type="button" class="chip">羊绒大衣怎么洗？</button>
+        <button type="button" class="chip">我还欠多少钱？</button>
+        <button type="button" class="chip">洗一件羽绒服多少钱？</button>
+    </div>
+
+    <form class="me-chat-form" id="chatForm">
+        <textarea id="chatInput" rows="2" maxlength="400" placeholder="问点什么，比如「我上周那件羊绒的到哪一步了」"></textarea>
+        <button class="btn btn-primary" id="sendBtn" type="submit">发送</button>
+    </form>
+    <p class="me-chat-tip">助手只能看到你自己的记录，看不到别人的；洗护建议都来自门店规则库，查不到会直接说查不到。</p>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/js/me_common.js"></script>
+<script src="/js/me_chat.js"></script>
+{% endblock %}

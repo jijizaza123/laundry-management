@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block title %}收衣{% endblock %}
+
+{% block content %}
+<div class="page-head">
+    <div>
+        <h1>收衣建单</h1>
+        <p>金额由服务端按价目表和会员等级计算，前端只提交"洗了什么、几件"</p>
+    </div>
+    <div class="btn-row">
+        <a class="btn btn-ghost btn-sm" href="/orders">订单列表</a>
+    </div>
+</div>
+
+<div class="grid" style="grid-template-columns: 1.5fr 1fr; align-items:start;">
+    <div class="card">
+        <div class="card-head"><h2>客户信息</h2><span class="sub">手机号可自动识别会员等级</span></div>
+
+        <div class="row">
+            <div class="field" style="flex:1.2;">
+                <label>客户手机号</label>
+                <div class="row" style="gap:8px;">
+                    <input class="input" id="customerPhone" placeholder="输入手机号后点查询" oninput="onPhoneInput()">
+                    <button class="btn btn-ghost btn-sm" style="height:38px;flex:0 0 auto;" onclick="queryCustomer()">查询</button>
+                </div>
+            </div>
+            <div class="field" style="flex:1;">
+                <label>客户姓名</label>
+                <input class="input" id="customerName" placeholder="新客户会自动建档">
+            </div>
+        </div>
+
+        <div id="memberInfo" style="display:none;margin:-4px 0 14px;padding:10px 12px;background:var(--surface-2);border-radius:10px;">
+            <span id="memberBadge"></span>
+            <span class="muted" style="font-size:12.5px;margin-left:8px;">积分 <b id="memberPoints">0</b> · 享 <b id="memberDiscount">100%</b> 计价</span>
+        </div>
+
+        <div class="card-head" style="margin-top:6px;">
+            <h2>衣物明细</h2>
+            <button class="btn btn-ghost btn-sm" onclick="addItemRow()">+ 添加一项</button>
+        </div>
+        <div id="itemsList"></div>
+        <div class="muted" style="font-size:12.5px;margin-top:6px;">单价取自服务价目表，改价请到「服务项目」维护，避免前后端金额不一致。</div>
+
+        <div class="row" style="margin-top:18px;">
+            <div class="field" style="flex:1;margin-bottom:0;">
+                <label>预计取衣时间</label>
+                <input class="input" id="expectedPickup" type="datetime-local">
+            </div>
+            <div class="field" style="flex:1;margin-bottom:0;">
+                <label>预收定金（元）</label>
+                <input class="input" id="deposit" type="number" min="0" step="0.01" value="0" oninput="refreshQuote()">
+            </div>
+        </div>
+
+        <label class="switch" style="margin-top:14px;">
+            <input type="checkbox" id="payNow" checked>
+            收衣时立即收取定金
+        </label>
+    </div>
+
+    <div class="card" style="position:sticky;top:80px;">
+        <div class="card-head"><h2>应收金额</h2><span class="sub" id="quoteLevel">普通客户</span></div>
+        <div class="summary">
+            <div class="sline"><span>折前小计</span><span class="mono" id="qSubtotal">¥0.00</span></div>
+            <div class="sline"><span>会员折扣 <span class="muted" id="qRate">100%</span></span><span class="cut mono" id="qDiscount">-¥0.00</span></div>
+            <div class="sline total"><span>应收</span><span id="qTotal">¥0.00</span></div>
+            <div class="sline"><span>本次收取定金</span><span class="mono" id="qDeposit">¥0.00</span></div>
+            <div class="sline"><span>取衣时待收</span><span class="mono" id="qRemaining">¥0.00</span></div>
+        </div>
+        <button class="btn" style="width:100%;height:42px;margin-top:16px;" id="submitBtn" onclick="submitOrder()">确认收衣</button>
+        <div class="muted" style="font-size:12px;margin-top:10px;">提交时后端会重新核算，金额被篡改会被拒绝。</div>
+    </div>
+</div>
+{% endblock %}
+
+{% block modal %}
+<div class="modal" id="receiptModal">
+    <div class="modal-panel" style="max-width:420px;">
+        <div class="modal-head">
+            <h3>收衣单</h3>
+            <button class="modal-close" onclick="closeModal('receiptModal')">×</button>
+        </div>
+        <div id="receiptBody"></div>
+        <div class="modal-foot no-print">
+            <button class="btn btn-ghost" onclick="closeModal('receiptModal')">关闭</button>
+            <button class="btn" onclick="window.print()">打印</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/js/receive.js"></script>
+{% endblock %}

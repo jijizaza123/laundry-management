@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}订单{% endblock %}
+
+{% block content %}
+<div class="page-head">
+    <div>
+        <h1>订单管理</h1>
+        <p>收衣 → 洗涤 → 可取衣 → 已完成，状态可追溯</p>
+    </div>
+    <div class="btn-row">
+        <input class="input" id="keyword" placeholder="订单号 / 姓名 / 手机号" style="width:210px;" onkeydown="if(event.key==='Enter'){loadOrders();}">
+        <button class="btn btn-ghost btn-sm" style="height:38px;" onclick="loadOrders()">搜索</button>
+        <a class="btn btn-sm" style="height:38px;" href="/receive">收衣建单</a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-head">
+        <div class="seg" id="statusSeg">
+            <button class="active" data-status="">全部</button>
+            <button data-status="received">待洗涤</button>
+            <button data-status="washing">洗涤中</button>
+            <button data-status="ready">可取衣</button>
+            <button data-status="completed">已完成</button>
+            <button data-status="cancelled">已取消</button>
+        </div>
+        <span class="sub" id="countLabel">—</span>
+    </div>
+
+    <div class="table-wrap">
+        <table>
+            <thead>
+            <tr>
+                <th>订单号</th>
+                <th>客户</th>
+                <th>衣物</th>
+                <th>应收</th>
+                <th>待收</th>
+                <th>状态</th>
+                <th>收衣时间</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody id="orderBody">
+            <tr><td colspan="8" class="empty">加载中…</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block modal %}
+<div class="modal" id="receiptModal">
+    <div class="modal-panel" style="max-width:420px;">
+        <div class="modal-head">
+            <h3>取衣单</h3>
+            <button class="modal-close" onclick="closeModal('receiptModal')">×</button>
+        </div>
+        <div id="receiptBody"></div>
+        <div class="modal-foot no-print">
+            <button class="btn btn-ghost" onclick="closeModal('receiptModal')">关闭</button>
+            <button class="btn" onclick="window.print()">打印</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/js/orders.js"></script>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}员工助手{% endblock %}
+
+{% block content %}
+<div class="page-head">
+    <div>
+        <h1>员工助手</h1>
+        <p>查订单、查今日经营、查洗护规则；涉及写数据的操作都要你点确认才执行</p>
+    </div>
+    <button class="btn btn-ghost btn-sm" id="clearChat">清空对话</button>
+</div>
+
+<div class="card chat-card">
+    <div class="chat-box" id="chatBox">
+        <div class="chat-msg assistant">问点什么？比如「今天收了几件」「帮我看看待复核的单」「订单 20261107123456 洗到哪了」。</div>
+    </div>
+    <form class="chat-form" id="chatForm">
+        <textarea id="chatInput" rows="2" placeholder="说人话就行，比如：把这一单改成可取衣"></textarea>
+        <button class="btn btn-primary" type="submit" id="chatSend">发送</button>
+    </form>
+    <p class="chat-tip">写操作会先出现「待确认动作卡」，你点确认才会真的写库。</p>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/js/chat.js"></script>
+{% endblock %}

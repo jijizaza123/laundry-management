@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}到店复核{% endblock %}
+
+{% block content %}
+<div class="page-head">
+    <div>
+        <h1>到店复核</h1>
+        <p>客户线上下的单，取件时要核对件数与面料；金额有变就留痕，等客户在自己手机上确认</p>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-head">
+        <h2 class="card-title">待复核 / 待客户确认</h2>
+        <span class="badge" id="pendingCount">0</span>
+    </div>
+    <div class="table-wrap">
+        <table>
+            <thead>
+            <tr>
+                <th>订单号</th>
+                <th>客户</th>
+                <th>明细</th>
+                <th>件数</th>
+                <th>客户下单金额</th>
+                <th>当前状态</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody id="reviewBody">
+            <tr><td colspan="7" class="empty">加载中…</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/js/review.js"></script>
+{% endblock %}

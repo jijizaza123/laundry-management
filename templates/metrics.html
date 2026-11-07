@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Agent 指标{% endblock %}
+
+{% block content %}
+<div class="page-head">
+    <div>
+        <h1>Agent 指标</h1>
+        <p>每轮对话落一条记录：调用量、错误率、P50/P95 延迟、多轮轮次、工具调用数</p>
+    </div>
+    <div class="btn-row">
+        <select class="select" id="days" style="width:130px;" onchange="loadMetrics()">
+            <option value="7">最近 7 天</option>
+            <option value="30">最近 30 天</option>
+            <option value="1">今天</option>
+        </select>
+        <button class="btn btn-ghost btn-sm" style="height:38px;" onclick="loadMetrics()">刷新</button>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-head">
+        <h2>两端汇总</h2>
+        <span class="sub" id="rangeLabel">—</span>
+    </div>
+    <div class="table-wrap">
+        <table>
+            <thead>
+            <tr>
+                <th>端</th>
+                <th>调用次数</th>
+                <th>错误</th>
+                <th>错误率</th>
+                <th>平均耗时</th>
+                <th>P50</th>
+                <th>P95</th>
+                <th>最大</th>
+                <th>平均轮次</th>
+                <th>工具调用</th>
+            </tr>
+            </thead>
+            <tbody id="metricBody">
+            <tr><td colspan="10" class="empty">加载中…</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-head">
+        <h2>最近 20 次调用</h2>
+        <span class="sub">问题过长会截断显示</span>
+    </div>
+    <div class="table-wrap">
+        <table>
+            <thead>
+            <tr>
+                <th>时间</th>
+                <th>端</th>
+                <th>问题</th>
+                <th>工具</th>
+                <th>轮次</th>
+                <th>耗时</th>
+                <th>状态</th>
+            </tr>
+            </thead>
+            <tbody id="recentBody">
+            <tr><td colspan="7" class="empty">加载中…</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/js/metrics.js"></script>
+{% endblock %}

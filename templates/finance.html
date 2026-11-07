@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block title %}财务{% endblock %}
+
+{% block content %}
+<div class="page-head">
+    <div>
+        <h1>经营报表</h1>
+        <p>日报、区间统计、服务项目排行与收支流水</p>
+    </div>
+    <div class="btn-row">
+        <button class="btn btn-ghost btn-sm" style="height:38px;" onclick="openTx('expense')">登记支出</button>
+        <button class="btn btn-sm" style="height:38px;" onclick="openTx('income')">登记收入</button>
+    </div>
+</div>
+
+<div class="grid grid-2" style="margin-bottom:16px;">
+    <div class="card">
+        <div class="card-head">
+            <h2>日报</h2>
+            <input class="input input-sm" type="date" id="dailyDate" style="width:150px;" onchange="loadDaily()">
+        </div>
+        <div class="summary">
+            <div class="sline"><span>收衣单数</span><span class="strong mono" id="dOrders">0</span></div>
+            <div class="sline"><span>完成取衣</span><span class="strong mono" id="dCompleted">0</span></div>
+            <div class="sline"><span>下单金额</span><span class="strong mono" id="dReceived">¥0.00</span></div>
+            <div class="sline"><span>实收收入</span><span class="strong mono" id="dIncome">¥0.00</span></div>
+            <div class="sline"><span>支出</span><span class="strong mono" id="dExpense">¥0.00</span></div>
+            <div class="sline total"><span>净利</span><span id="dNet">¥0.00</span></div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-head">
+            <h2>区间统计</h2>
+            <div class="btn-row">
+                <input class="input input-sm" type="date" id="rangeStart" style="width:145px;">
+                <input class="input input-sm" type="date" id="rangeEnd" style="width:145px;">
+                <button class="btn btn-ghost btn-sm" onclick="loadRange()">统计</button>
+            </div>
+        </div>
+        <div class="summary">
+            <div class="sline"><span>订单数</span><span class="strong mono" id="rOrders">0</span></div>
+            <div class="sline"><span>下单金额</span><span class="strong mono" id="rTotal">¥0.00</span></div>
+            <div class="sline"><span>营业收入</span><span class="strong mono" id="rIncome">¥0.00</span></div>
+            <div class="sline"><span>营业支出</span><span class="strong mono" id="rExpense">¥0.00</span></div>
+            <div class="sline"><span>客单价</span><span class="strong mono" id="rAvg">¥0.00</span></div>
+            <div class="sline total"><span>净利</span><span id="rNet">¥0.00</span></div>
+        </div>
+    </div>
+</div>
+
+<div class="grid grid-2">
+    <div class="card">
+        <div class="card-head">
+            <h2>服务项目排行</h2>
+            <span class="sub">按洗涤件数</span>
+        </div>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>服务项目</th><th>件数</th><th>金额</th></tr></thead>
+                <tbody id="rankBody">
+                <tr><td colspan="3" class="empty">加载中…</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-head">
+            <h2>最近流水</h2>
+            <span class="sub">收入 / 支出</span>
+        </div>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>时间</th><th>类型</th><th>金额</th><th>说明</th></tr></thead>
+                <tbody id="txBody">
+                <tr><td colspan="4" class="empty">加载中…</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="txModal">
+    <div class="modal-panel" style="max-width:420px;">
+        <div class="modal-head">
+            <h3 id="txTitle">登记支出</h3>
+            <button class="modal-close" onclick="closeModal('txModal')">×</button>
+        </div>
+        <input type="hidden" id="txType">
+        <div class="field"><label>金额（元）</label><input class="input" id="txAmount" type="number" min="0.01" step="0.01" value=""></div>
+        <div class="field"><label>说明</label><input class="input" id="txDesc" placeholder="如：采购洗衣液"></div>
+        <div class="modal-foot">
+            <button class="btn btn-ghost" onclick="closeModal('txModal')">取消</button>
+            <button class="btn" onclick="submitTx()">保存</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/js/finance.js"></script>
+{% endblock %}

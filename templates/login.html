@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录 · 洗衣店管理系统</title>
+    <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+<div class="login-wrap">
+    <aside class="login-aside">
+        <div>
+            <a class="brand" href="/"><span class="brand-mark">洗</span>洗衣店管理</a>
+            <h2 style="margin-top:44px;">收衣、洗涤、取衣<br>一条线管到底</h2>
+            <p>会员折扣自动计价、订单状态全程流转、逾期未取自动提醒，门店日常运营需要的都在这一套里。</p>
+            <div class="points">
+                <div><strong>5 级会员</strong><span>按等级自动打折</span></div>
+                <div><strong>4 个状态</strong><span>收衣到取衣可追溯</span></div>
+                <div><strong>日报月报</strong><span>收入支出一眼看</span></div>
+            </div>
+        </div>
+        <p style="font-size:12.5px;color:rgba(255,255,255,.5);">© 洗衣店管理系统 v2</p>
+    </aside>
+
+    <main class="login-main">
+        <div class="login-card">
+            <div id="loginFormDiv">
+                <h3>欢迎回来</h3>
+                <p class="hint">使用门店账号登录</p>
+                <div class="form-msg" id="loginMsg"></div>
+                <form id="loginForm">
+                    <div class="field">
+                        <label for="loginUsername">用户名</label>
+                        <input class="input" id="loginUsername" placeholder="admin" autocomplete="username" required>
+                    </div>
+                    <div class="field">
+                        <label for="loginPassword">密码</label>
+                        <input class="input" id="loginPassword" type="password" placeholder="••••••" autocomplete="current-password" required>
+                    </div>
+                    <button class="btn" type="submit" style="width:100%;height:40px;">登录</button>
+                </form>
+                <p class="login-foot">
+                    还没有账号？<button class="link-btn" type="button" id="toRegister">注册门店员工</button>
+                </p>
+            </div>
+
+            <div id="registerFormDiv" style="display:none;">
+                <h3>注册门店员工</h3>
+                <p class="hint">需要门店邀请码；没有邀请码请让管理员在后台建号</p>
+                <div class="form-msg" id="registerMsg"></div>
+                <form id="registerForm">
+                    <div class="field">
+                        <label for="regUsername">用户名</label>
+                        <input class="input" id="regUsername" placeholder="至少 2 位" required>
+                    </div>
+                    <div class="field">
+                        <label for="regPassword">密码</label>
+                        <input class="input" id="regPassword" type="password" placeholder="至少 6 位，不能是纯数字" required>
+                    </div>
+                    <div class="field">
+                        <label for="regName">姓名</label>
+                        <input class="input" id="regName" placeholder="真实姓名" required>
+                    </div>
+                    <div class="field">
+                        <label for="regInvite">门店邀请码</label>
+                        <input class="input" id="regInvite" placeholder="向店长索取" autocomplete="off">
+                    </div>
+                    <button class="btn" type="submit" style="width:100%;height:40px;">注册</button>
+                </form>
+                <p class="login-foot">
+                    已有账号？<button class="link-btn" type="button" id="toLogin">返回登录</button>
+                </p>
+            </div>
+        </div>
+    </main>
+</div>
+
+<div class="toast-host" id="toastHost"></div>
+<script src="/js/api.js"></script>
+<script src="/js/app.js"></script>
+<script src="/js/login.js"></script>
+</body>
+</html>

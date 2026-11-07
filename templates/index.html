@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% block title %}首页{% endblock %}
+
+{% block content %}
+<div class="page-head">
+    <div>
+        <h1>门店概览</h1>
+        <p id="todayLabel">今日经营数据</p>
+    </div>
+    <div class="btn-row">
+        <a class="btn btn-ghost btn-sm" href="/pickup">处理取衣</a>
+        <a class="btn btn-sm" href="/receive">收衣建单</a>
+    </div>
+</div>
+
+<div class="grid grid-4" style="margin-bottom:16px;">
+    <div class="stat">
+        <div class="label"><span class="dot"></span>今日收衣</div>
+        <div class="value" id="sTodayOrders">0</div>
+        <div class="hint">单</div>
+    </div>
+    <div class="stat is-success">
+        <div class="label"><span class="dot"></span>在店订单</div>
+        <div class="value" id="sInStore">0</div>
+        <div class="hint" id="sInStoreHint">待洗涤 0 · 洗涤中 0</div>
+    </div>
+    <div class="stat">
+        <div class="label"><span class="dot"></span>可取衣</div>
+        <div class="value" id="sReady">0</div>
+        <div class="hint">等待客户上门</div>
+    </div>
+    <div class="stat is-warn">
+        <div class="label"><span class="dot"></span>逾期未取</div>
+        <div class="value" id="sOverdue">0</div>
+        <div class="hint">超过预约取衣日期</div>
+    </div>
+</div>
+
+<div class="grid grid-2" style="margin-bottom:16px;">
+    <div class="card">
+        <div class="card-head">
+            <h2>近 7 日趋势</h2>
+            <div class="legend">
+                <span><i style="background:#2563eb"></i>订单量</span>
+                <span><i style="background:#0f9f6e"></i>收入</span>
+            </div>
+        </div>
+        <div class="chart" id="trendChart"></div>
+    </div>
+
+    <div class="card">
+        <div class="card-head">
+            <h2>财务速览</h2>
+            <a class="btn btn-ghost btn-sm" href="/finance">财务明细</a>
+        </div>
+        <div class="summary">
+            <div class="sline"><span>今日收入</span><span class="strong" id="fTodayIncome">¥0.00</span></div>
+            <div class="sline"><span>累计收入</span><span class="strong" id="fTotalIncome">¥0.00</span></div>
+            <div class="sline"><span>累计支出</span><span class="strong" id="fTotalExpense">¥0.00</span></div>
+            <div class="sline total"><span>净利润</span><span id="fNetProfit">¥0.00</span></div>
+        </div>
+        <div class="muted" style="font-size:12.5px;margin-top:12px;">共 <span id="fCustomers">0</span> 位客户在档</div>
+    </div>
+</div>
+
+<div class="grid grid-2">
+    <div class="card">
+        <div class="card-head">
+            <h2>逾期未取</h2>
+            <span class="sub" id="overdueSub">—</span>
+        </div>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                <tr><th>订单号</th><th>客户</th><th>应收</th><th>预约取衣</th></tr>
+                </thead>
+                <tbody id="overdueBody">
+                <tr><td colspan="4" class="empty">加载中…</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-head">
+            <h2>最近订单</h2>
+            <a class="btn btn-ghost btn-sm" href="/orders">全部订单</a>
+        </div>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                <tr><th>订单号</th><th>客户</th><th>状态</th><th>应收</th></tr>
+                </thead>
+                <tbody id="recentBody">
+                <tr><td colspan="4" class="empty">加载中…</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/js/index.js"></script>
+{% endblock %}

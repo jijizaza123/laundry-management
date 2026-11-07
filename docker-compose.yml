@@ -1,0 +1,27 @@
+services:
+  app:
+    build: .
+    image: laundry-management:latest
+    ports:
+      - "8000:8000"
+    environment:
+      LAUNDRY_ENV: production
+      # 生产环境必须给，缺了进程会拒绝启动（这是故意的）
+      LAUNDRY_SECRET_KEY: ${LAUNDRY_SECRET_KEY:?请在 .env 里设置 LAUNDRY_SECRET_KEY}
+      LAUNDRY_STAFF_INVITE_CODE: ${LAUNDRY_STAFF_INVITE_CODE:-}
+      LAUNDRY_DATABASE_URL: sqlite:////data/laundry.db
+      AGNES_API_KEY: ${AGNES_API_KEY:-}
+      AGNES_BASE_URL: ${AGNES_BASE_URL:-https://apihub.agnes-ai.com/v1}
+      AGNES_MODEL: ${AGNES_MODEL:-agnes-3.0-flash}
+    volumes:
+      - laundry-data:/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request;urllib.request.urlopen('http://127.0.0.1:8000/api/health')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  laundry-data:

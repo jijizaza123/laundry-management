@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block title %}库存{% endblock %}
+
+{% block content %}
+<div class="page-head">
+    <div>
+        <h1>耗材库存</h1>
+        <p>库存低于 5 会标红，出库超过现有数量会被拒绝</p>
+    </div>
+    <div class="btn-row">
+        <button class="btn btn-sm" style="height:38px;" onclick="openAdd()">新增耗材</button>
+    </div>
+</div>
+
+<div class="grid grid-3" style="margin-bottom:16px;">
+    <div class="stat">
+        <div class="label"><span class="dot"></span>耗材种类</div>
+        <div class="value" id="iKinds">0</div>
+        <div class="hint">条库存记录</div>
+    </div>
+    <div class="stat is-warn">
+        <div class="label"><span class="dot"></span>低库存</div>
+        <div class="value" id="iLow">0</div>
+        <div class="hint">数量 ≤ 5</div>
+    </div>
+    <div class="stat is-success">
+        <div class="label"><span class="dot"></span>库存总值</div>
+        <div class="value" id="iValue">¥0</div>
+        <div class="hint">按单价估算</div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-head">
+        <h2>库存明细</h2>
+        <span class="sub" id="countLabel">—</span>
+    </div>
+    <div class="table-wrap">
+        <table>
+            <thead>
+            <tr><th>耗材</th><th>当前数量</th><th>单位</th><th>单价</th><th>状态</th><th>操作</th></tr>
+            </thead>
+            <tbody id="invBody">
+            <tr><td colspan="6" class="empty">加载中…</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal" id="invModal">
+    <div class="modal-panel" style="max-width:420px;">
+        <div class="modal-head">
+            <h3 id="invTitle">新增耗材</h3>
+            <button class="modal-close" onclick="closeModal('invModal')">×</button>
+        </div>
+        <div id="invForm">
+            <div class="field"><label>耗材名称</label><input class="input" id="invName" placeholder="如：洗衣液"></div>
+            <div class="row">
+                <div class="field"><label>数量</label><input class="input" id="invQty" type="number" min="0" value="0"></div>
+                <div class="field"><label>单位</label><input class="input" id="invUnit" value="瓶"></div>
+            </div>
+            <div class="field"><label>单价（元）</label><input class="input" id="invPrice" type="number" min="0" step="0.01" value="0"></div>
+        </div>
+        <div id="moveForm" style="display:none;">
+            <p class="muted" id="moveHint"></p>
+            <div class="field"><label>数量</label><input class="input" id="moveQty" type="number" min="1" value="1"></div>
+        </div>
+        <div class="modal-foot">
+            <button class="btn btn-ghost" onclick="closeModal('invModal')">取消</button>
+            <button class="btn" id="invSubmit" onclick="submitInv()">保存</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/js/inventory.js"></script>
+{% endblock %}
