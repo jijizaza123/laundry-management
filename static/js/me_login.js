@@ -19,9 +19,18 @@
         b.addEventListener('click', function () { switchTab(b.dataset.tab); });
     });
 
+    // 已经登录过的客户直接进客户端，不用再看一次登录页
+    try {
+        const saved = JSON.parse(localStorage.getItem('me_user') || 'null');
+        if (localStorage.getItem('me_token') && saved && (!saved.role || saved.role === 'customer')) {
+            window.location.href = '/me';
+            return;
+        }
+    } catch (e) { /* 忽略脏数据 */ }
+
     function saveSession(result) {
-        localStorage.setItem('token', result.token);
-        localStorage.setItem('user', JSON.stringify(result.user || {}));
+        localStorage.setItem('me_token', result.token);
+        localStorage.setItem('me_user', JSON.stringify(result.user || {}));
     }
 
     const loginForm = document.getElementById('loginForm');

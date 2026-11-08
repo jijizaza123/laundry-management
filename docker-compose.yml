@@ -13,6 +13,8 @@ services:
       AGNES_API_KEY: ${AGNES_API_KEY:-}
       AGNES_BASE_URL: ${AGNES_BASE_URL:-https://apihub.agnes-ai.com/v1}
       AGNES_MODEL: ${AGNES_MODEL:-agnes-3.0-flash}
+      # 服务器宿主机若是 UTC，缺了这行订单号/预计取衣时间会差 8 小时
+      TZ: Asia/Shanghai
     volumes:
       - laundry-data:/data
     restart: unless-stopped

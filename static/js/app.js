@@ -74,7 +74,7 @@ function logout() {
 /* 登录守卫 + 顶栏用户信息 + 当前页高亮 */
 function initShell(activePage) {
     const user = getUser();
-    if (!user) {
+    if (!user || !localStorage.getItem('token')) {
         window.location.href = '/login';
         return null;
     }

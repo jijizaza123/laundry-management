@@ -12,6 +12,7 @@ from ..config import CARE_FALLBACK_TEXT, LEVEL_NAMES, LEVEL_THRESHOLDS, MEMBER_D
 from ..models import Customer
 from ..services import care_service, customer_service, order_service
 from ..services import catalog_service
+from ..services import appointment_service
 
 # OpenAI tools 规范：给模型看的说明书
 TOOL_SPECS = [
@@ -72,6 +73,18 @@ TOOL_SPECS = [
             "name": "query_price_list",
             "description": "查询门店服务价目表：每个服务项目的单价（元/件）。回答价格问题时必须用它，不要凭印象报数。",
             "parameters": {"type": "object", "properties": {}, "required": []},
+        },
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "query_my_appointments",
+            "description": "查询当前登录客户本人提交的上门取件预约记录：预约单号、上门时间、状态（待上门/已上门/已取消）。没有参数，后端按登录身份过滤。",
+            "parameters": {
+                "type": "object",
+                "properties": {"limit": {"type": "integer", "description": "返回条数，默认 5，最多 10"}},
+                "required": [],
+            },
         },
     },
 ]
@@ -176,12 +189,30 @@ def query_price_list(ctx: ToolContext) -> dict:
     }
 
 
+def query_my_appointments(ctx: ToolContext, limit: int = 5) -> dict:
+    limit = max(1, min(int(limit or 5), 10))
+    rows = appointment_service.list_of_customer(ctx.db, ctx.customer.id)
+    brief = [
+        {
+            "appt_no": r["appt_no"],
+            "expected_time": r["expected_time"],
+            "status": r["status_text"],
+            "note": r["note"],
+        }
+        for r in rows[:limit]
+    ]
+    if not brief:
+        return {"total": 0, "appointments": [], "message": "这位客户还没有提交过上门取件预约"}
+    return {"total": len(rows), "appointments": brief}
+
+
 _DISPATCH = {
     "query_my_orders": query_my_orders,
     "query_my_order_detail": query_my_order_detail,
     "query_my_account": query_my_account,
     "query_care_rule": query_care_rule,
     "query_price_list": query_price_list,
+    "query_my_appointments": query_my_appointments,
 }
 
 

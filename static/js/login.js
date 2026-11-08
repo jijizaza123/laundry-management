@@ -1,6 +1,8 @@
 /* 登录 / 注册 */
 document.addEventListener('DOMContentLoaded', function () {
-    if (localStorage.getItem('token') && getUser()) {
+    var saved = getUser();
+    // 只有管理端账号才自动进入；客户 token 进管理端会一路 403
+    if (localStorage.getItem('token') && saved && saved.role !== 'customer') {
         window.location.href = '/';
         return;
     }

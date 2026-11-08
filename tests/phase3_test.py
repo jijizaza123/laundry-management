@@ -185,6 +185,8 @@ with TestClient(app) as c:
     check("预约完成后客户侧同步", any(a["status"] == "completed" for a in c.get("/api/my/appointments", headers=A).json()["data"]))
 
     # ---------- 5. 会话持久化 ----------
+    # 幂等：源库里的历史可能已经存在（人工演示过），先清空再assert两轮四条
+    c.request("DELETE", "/api/my/chat/history", headers=A)
     original = llm.chat_completion
     llm.chat_completion = fake_chat
     try:

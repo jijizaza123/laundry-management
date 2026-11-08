@@ -9,9 +9,16 @@ ENV PYTHONUNBUFFERED=1 \
     LAUNDRY_ENV=production \
     LAUNDRY_PORT=8000 \
     LAUNDRY_HOST=0.0.0.0 \
-    LAUNDRY_DATABASE_URL=sqlite:////data/laundry.db
+    LAUNDRY_DATABASE_URL=sqlite:////data/laundry.db \
+    TZ=Asia/Shanghai
 
 WORKDIR /app
+
+# 容器默认 UTC，不装 tzdata 的话 datetime.now() 会比北京时间慢 8 小时（订单号、预计取衣时间都会错）
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends tzdata \
+    && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
+    && rm -rf /var/lib/apt/lists/*
 
 # 默认走清华源：国内云服务器构建快很多；海外构建可 --build-arg PIP_INDEX_URL=https://pypi.org/simple
 ARG PIP_INDEX_URL=https://pypi.tuna.tsinghua.edu.cn/simple

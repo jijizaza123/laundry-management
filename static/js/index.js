@@ -1,6 +1,8 @@
 /* 首页看板 */
 document.addEventListener('DOMContentLoaded', async function () {
-    initShell('dashboard');
+    // initShell 里会做登录守卫，守卫没过（返回 null）就直接返回，避免带着无效 token
+    // 去请求 /api/stats，页面刚打开就弹一个红色错误提示
+    if (!initShell('dashboard')) return;
     await Promise.all([loadStats(), loadTrend(), loadOverdue(), loadRecent()]);
 });
 

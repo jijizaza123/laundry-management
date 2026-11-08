@@ -25,3 +25,7 @@ Thumbs.db
 .pytest_cache/
 %TEMP%/
 *.log
+
+# 个人部署脚本（硬编码服务器地址，不随仓库公开）
+scripts/_deploy_*.py
+scripts/_github_push.py

@@ -144,7 +144,12 @@ try:
     check("传 phone 参数 → 结构化参数错误", "error" in spoof, str(spoof)[:120])
     check("参数错误不泄露数据", order_b_no not in json.dumps(spoof, ensure_ascii=False))
     check("未知工具被拦截", "error" in tools.run_tool("drop_all_tables", {}, ctx_a))
-    check("工具白名单只有 5 个只读工具", len(tools.ALLOWED_TOOLS) == 5, str(tools.ALLOWED_TOOLS))
+    check("工具白名单只有 6 个只读工具", len(tools.ALLOWED_TOOLS) == 6, str(tools.ALLOWED_TOOLS))
+
+    appts = tools.query_my_appointments(ctx_a)
+    check("预约工具能查到本人预约或明确为空",
+          ("appointments" in appts) and ("error" not in appts), str(appts)[:150])
+    check("预约工具不回显他人手机号", "147258" not in json.dumps(appts, ensure_ascii=False))
 
     account = tools.query_my_account(ctx_a)
     check("账户信息含等级/积分/待付/累计消费",

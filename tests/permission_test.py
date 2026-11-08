@@ -47,6 +47,19 @@ PHONE_A, PHONE_B = "123456", "147258"
 ORDER_B_ID = 4
 ORDER_B_NO = "O20260604181055"
 
+# 幂等准备：源库是真实业务库，可能已经人工给这两个手机号开过客户端账号。
+# 复制到临时库后先清掉，否则 bind-account 会返回"该手机号已注册"，测试没法重复跑。
+from app.db import SessionLocal  # noqa: E402
+from app.models import User  # noqa: E402
+
+_seed = SessionLocal()
+for _phone in (PHONE_A, PHONE_B):
+    _u = _seed.query(User).filter(User.username == _phone).first()
+    if _u:
+        _seed.delete(_u)
+_seed.commit()
+_seed.close()
+
 with TestClient(app) as c:
     # ---------- 1. 未登录 ----------
     check("未登录访问订单接口 401", c.get("/api/orders").status_code == 401)

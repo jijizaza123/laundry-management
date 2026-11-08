@@ -1,19 +1,19 @@
 /* 客户端公共逻辑：登录守卫、等级进度、订单步骤条、明细渲染 */
 
 function meUser() {
-    try { return JSON.parse(localStorage.getItem('user') || 'null'); } catch (e) { return null; }
+    try { return JSON.parse(localStorage.getItem('me_user') || 'null'); } catch (e) { return null; }
 }
 
 function meLogout() {
-    localStorage.removeItem('user');
-    localStorage.removeItem('token');
+    localStorage.removeItem('me_user');
+    localStorage.removeItem('me_token');
     window.location.href = '/me/login';
 }
 
-/* 守卫：必须已登录且是客户账号；员工 token 进客户端页面会被劝返 */
+/* 守卫：必须已登录且是客户账号 */
 function meGuard() {
     const user = meUser();
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('me_token');
     if (!token || !user) {
         window.location.href = '/me/login';
         return null;
